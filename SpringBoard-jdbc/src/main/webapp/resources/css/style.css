@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+#content{width: 1000px; margin: 0 auto;}
+h2{color: #00f; text-align: center;}
+.main-pic{text-align: center;}
+.menu{text-align: center; margin: 10px;}
+a{color: blue; text-decoration: none;}
+input[type="submit"], input[type="reset"]{padding: 8px;}
+
+/* 글쓰기 스타일 */
+.tbl_write{width: 600px; margin: 30px auto; border-collapse: collapse;}
+.tbl_write td{border: 1px solid #ccc; padding: 10px;}
+.tbl_write input[type="text"]{width: 590px; height: 20px; padding:4px}
+.tbl_write textarea{width: 590px; height: 300px; padding:4px}
+.tbl_write tr:last-child td{text-align: center;}
+
+/* 글 목록 */
+#content .logout{text-align: center;}
+.tbl_list{width: 600px; margin: 30px auto; border-collapse: collapse;}
+.tbl_list th, td{border: 1px solid #ccc; padding: 10px; text-align:center}
+.tbl_list tbody tr td:nth-child(2){text-align: left; padding-left: 16px;}
+#content .btn_write{text-align: right; margin-right: 20%}
+#content .btn_write button{padding: 8px;}
+
+/* 회원가입 */
+.tbl_join{width: 450px; margin: 30px auto; border-collapse: collapse;}
+.tbl_join td{border: 1px solid #ccc; padding: 15px;}
+
+/* 로그인 */
+.tbl_login{width: 400px; margin: 30px auto; border-collapse: collapse;}
+.tbl_login td{border: 1px solid #ccc; padding: 15px;}
