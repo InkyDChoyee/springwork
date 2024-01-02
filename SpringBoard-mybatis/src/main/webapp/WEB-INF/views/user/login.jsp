@@ -4,17 +4,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>로그인</title>
 </head>
 <body>
 	<div id="content">
-		<h2>회원 가입</h2>
+		<h2>로그인</h2>
 		<form action="/user/login" method="post">
 		<table class="tbl_login">
 			<tr>
 			   <td><label>아이디</label></td>
 				<td>
-					<input type="text" name="userId" placeholder="아이디">
+					<input type="text" name="userId" placeholder="아이디" >
 				</td>
 			</tr>
 			<tr>

@@ -14,19 +14,19 @@
 			<tr>
 			   <td><label>아이디</label></td>
 				<td>
-					<input type="text" name="userId" placeholder="아이디">
+					<input type="text" name="userId" placeholder="아이디" required>
 				</td>
 			</tr>
 			<tr>
 			    <td> <label>비밀번호</label></td>
 				<td>
-					<input type="password" name="userPasswd" placeholder="비밀번호">
+					<input type="password" name="userPasswd" placeholder="비밀번호" required>
 				</td>
 			</tr>
 			<tr>
 			    <td><label>이름</label></td>
 				<td>
-					<input type="text" name="userName" placeholder="이름">
+					<input type="text" name="userName" placeholder="이름" required>
 				</td>
 			</tr>
 			<tr>
