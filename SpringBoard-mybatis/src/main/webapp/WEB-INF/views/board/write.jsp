@@ -7,7 +7,8 @@
 <title>글쓰기</title>
 </head>
 <body>
-	<div id="content">
+	<jsp:include page="../layout/header.jsp" />
+	<div id="container">
 		<h2>글쓰기</h2>
 		<form action="/board/write" method="post">
 		<table class="tbl_write">

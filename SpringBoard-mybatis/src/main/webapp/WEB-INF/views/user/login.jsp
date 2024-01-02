@@ -7,7 +7,8 @@
 <title>로그인</title>
 </head>
 <body>
-	<div id="content">
+	<jsp:include page="../layout/header.jsp" />
+	<div id="container">
 		<h2>로그인</h2>
 		<form action="/user/login" method="post">
 		<table class="tbl_login">

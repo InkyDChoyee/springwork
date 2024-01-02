@@ -7,7 +7,8 @@
 <title>회원정보</title>
 </head>
 <body>
-	<div id="content">
+	<jsp:include page="../layout/header.jsp" />
+	<div id="container">
 		<h2>나의 정보</h2>
 		<table class="tbl_userdetail">
 			<tr>

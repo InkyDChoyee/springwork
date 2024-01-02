@@ -7,7 +7,8 @@
 <title>글 상세보기</title>
 </head>
 <body>
-	<div id="content">
+	<jsp:include page="../layout/header.jsp" />
+	<div id="container">
 		<h2>글 상세보기</h2>
 		<table class="tbl_detail">
 			<tr>

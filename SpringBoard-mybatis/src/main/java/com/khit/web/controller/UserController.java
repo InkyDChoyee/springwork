@@ -71,7 +71,7 @@ public class UserController {
 	   UserDTO loginUser = userService.login(userDTO);
 	   if(loginUser != null) {
 		   session.setAttribute("sessionId", userDTO.getUserId());
-		   return "redirect:/main";
+		   return "redirect:/";
 	   }else {
 		   return "/user/login";
 	   }

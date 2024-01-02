@@ -8,7 +8,8 @@
 <title>글목록</title>
 </head>
 <body>
-	<div id="content">
+	<jsp:include page="../layout/header.jsp" />
+	<div id="container">
 		<h2>글목록</h2>
 		<table class="tbl_list">
 			<thead>
