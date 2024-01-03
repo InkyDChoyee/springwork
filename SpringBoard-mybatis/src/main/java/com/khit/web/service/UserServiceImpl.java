@@ -34,4 +34,19 @@ public class UserServiceImpl implements UserService{
 		return userMapper.login(userDTO);
 	}
 
+	@Override
+	public UserDTO findByUserId(String userId) {
+		return userMapper.findByUserId(userId);
+	}
+
+	@Override
+	public void update(UserDTO userDTO) {
+		userMapper.update(userDTO);
+	}
+
+	@Override
+	public void delete(Long id) {
+		userMapper.delete(id);
+	}
+
 }

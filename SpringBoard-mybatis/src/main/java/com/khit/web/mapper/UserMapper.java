@@ -10,7 +10,13 @@ public interface UserMapper {
 
 	List<UserDTO> findAll();
 
-	UserDTO findById(Long id);
+	UserDTO findById(Long id);  // 회원 번호
 
 	UserDTO login(UserDTO userDTO);
+
+	UserDTO findByUserId(String userId); // 회원 아이디
+
+	void update(UserDTO userDTO);
+
+	void delete(Long id);
 }
