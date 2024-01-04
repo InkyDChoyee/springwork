@@ -24,20 +24,34 @@
 						<td>작성자 : ${board.userId}</td>
 					</tr>
 					<tr>
-						<td><textarea name="boardContent" >${board.boardContent}</textarea></td>
+						<td><textarea name="boardContent">${board.boardContent}</textarea></td>
 					</tr>
 					<tr>
 						<td>조회수 : ${board.hit}</td>
 					</tr>
-					<tr>
-						<td>작성일 : <fmt:formatDate value="${board.createTime}"
-								pattern="yyy-MM-dd HH:mm:ss" /></td>
-					</tr>
+					<c:choose>
+						<c:when test="${empty board.updateTime}">
+							<tr>
+								<td>작성일 : <fmt:formatDate value="${board.createTime}"
+										pattern="yyy-MM-dd HH:mm:ss" /></td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td>작성일 : <fmt:formatDate value="${board.createTime}"
+										pattern="yyy-MM-dd HH:mm:ss" /></td>
+							</tr>
+							<tr>
+								<td>수정일 : <fmt:formatDate value="${board.updateTime}"
+										pattern="yyy-MM-dd HH:mm:ss" /></td>
+							</tr>
+
+						</c:otherwise>
+					</c:choose>
 					<tr>
 						<td>
 							<button type="submit">수정 완료</button>
-							<button type="reset">수정 취소</button> 
-							<a href="/board/"><button>목록</button></a>
+							<button type="reset">수정 취소</button> <a href="/board/"><button>목록</button></a>
 						</td>
 					</tr>
 				</table>

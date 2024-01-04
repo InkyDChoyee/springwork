@@ -29,7 +29,7 @@
 	
 	<update id="update">
 		update boards 
-		set boardtitle = #{boardTitle}, boardcontent = #{boardContent}
+		set boardtitle = #{boardTitle}, boardcontent = #{boardContent}, updatetime = now()
 		where id = #{id}
 	</update>
 </mapper>

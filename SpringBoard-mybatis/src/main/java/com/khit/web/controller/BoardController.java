@@ -55,7 +55,6 @@ public class BoardController {
 	 	// 조회수 증가
 		boardService.updateHit(id);
 		
-		
 		// 글 상세보기
 		BoardDTO boardDTO = boardService.findById(id);
 	 	model.addAttribute("board", boardDTO);

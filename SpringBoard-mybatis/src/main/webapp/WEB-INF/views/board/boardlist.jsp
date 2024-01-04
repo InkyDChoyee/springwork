@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -31,14 +31,24 @@
 							<td><a href="/board?id=${board.id}">${board.boardTitle}</a></td>
 							<td>${board.userId}</td>
 							<td>${board.hit}</td>
-							<td><fmt:formatDate value="${board.createTime}" pattern="yyy-MM-dd HH:mm:ss"/></td>
+							<td>
+								<c:choose>
+									<c:when test="${empty board.updateTime}">
+										<fmt:formatDate value="${board.createTime}"
+											pattern="yyy-MM-dd HH:mm:ss" />(작성일)
+									</c:when>
+									<c:otherwise>
+										<fmt:formatDate value="${board.updateTime}"
+											pattern="yyy-MM-dd HH:mm:ss" />(수정일)
+									</c:otherwise>
+								</c:choose>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 			<div class="boardlist_button">
-				<a href="/"><button>Home</button></a> 
-				<a href="/board/write"><button>글쓰기</button></a>
+				<a href="/"><button>Home</button></a> <a href="/board/write"><button>글쓰기</button></a>
 			</div>
 		</section>
 	</div>

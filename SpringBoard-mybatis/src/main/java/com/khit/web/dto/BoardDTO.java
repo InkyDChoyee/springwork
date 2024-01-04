@@ -13,7 +13,7 @@ public class BoardDTO {
 	private String boardContent;
 	private Integer hit;
 	private Timestamp createTime;
-	private Timestamp updatedTime;
+	private Timestamp updateTime;
 	
 	
 }
