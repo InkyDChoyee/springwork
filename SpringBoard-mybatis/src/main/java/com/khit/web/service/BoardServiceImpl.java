@@ -30,4 +30,21 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.findById(id);
 	}
 
+	@Override
+	public void updateHit(Long id) {
+		boardMapper.updateHit(id);
+		
+	}
+
+	@Override
+	public void delete(Long id) {
+		boardMapper.delete(id);
+		
+	}
+
+	@Override
+	public void update(BoardDTO boardDTO) {
+		boardMapper.update(boardDTO);
+	}
+
 }

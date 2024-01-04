@@ -107,11 +107,13 @@ table thead {background: #eee;}
 .list_btn{float: right;}
 
 /* 글 상세 스타일 */
-#detail {width: 750px; margin:20px auto;}
-#detail table {width: 750px; margin: 20px auto;}
+#detail {width: 600px; margin: 20px auto;}
+#detail table {width: 600px; margin: 20px auto;}
 #detail table, th, td {border: 1px solid #ccc; 
 						   border-collapse: collapse;
-						   text-align: center;}
+						   text-align: left;}
+#detail input {width: 600px; height: 25px; padding: 5px;}
+#detail textarea{width: 600px; height: 500px; resize: none; overflow-y: scroll auto; padding: 5px;}
 #detail button {padding: 3px 10px; width: 100px;}
 
 

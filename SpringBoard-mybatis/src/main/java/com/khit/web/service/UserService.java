@@ -19,5 +19,7 @@ public interface UserService {
 	void update(UserDTO userDTO);
 
 	void delete(Long id);
+
+	String checkUserId(String userId);
 	
 }

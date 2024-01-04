@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,8 +52,34 @@ public class BoardController {
 	// /board?id=
 	@GetMapping
 	public String getBoard(@RequestParam("id") Long id, Model model) {
-	 	BoardDTO boardDTO = boardService.findById(id);
+	 	// 조회수 증가
+		boardService.updateHit(id);
+		
+		
+		// 글 상세보기
+		BoardDTO boardDTO = boardService.findById(id);
 	 	model.addAttribute("board", boardDTO);
 		return "/board/detail";
+	}
+	
+	// 게시글 삭제
+	@GetMapping("/delete")
+	public String delete(@RequestParam("id") Long id) {
+		boardService.delete(id);
+		return "redirect:/board/";
+	}
+	
+	// 게시글 수정
+	@GetMapping("/update")
+	public String update(Model model, @RequestParam("id") Long id) {
+		BoardDTO baordDTO = boardService.findById(id);
+		model.addAttribute("board",baordDTO);
+		return "/board/boardupdate";
+	}
+	
+	@PostMapping("/update")
+	public String update(@ModelAttribute BoardDTO boardDTO) {
+		boardService.update(boardDTO);
+		return "redirect:/board?id=" + boardDTO.getId();
 	}
 }
