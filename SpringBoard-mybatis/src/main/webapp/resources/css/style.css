@@ -122,6 +122,12 @@ table thead {background: #eee;}
 .reply {border-top: 1px dotted #ccc;}
 .reply p {margin: 20px 0; padding: 5px 0; font-size: 0.9rem; color: #444;}
 .reply p:nth-of-type(1) {white-space: pre-line; line-height: 1.5;}
-
+.replylogin {
+	width: 100%;
+	margin: 50px auto;
+	border: 1px solid #ccc;
+	padding: 30px;
+}
+#replyform_btn {width: 60px; height: 40px; }
 
 

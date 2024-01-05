@@ -65,26 +65,47 @@
 			<c:forEach items="${replyList}" var="reply">
 				<div class="reply">
 					<p>${reply.replyContent}</p>
-					<p>작성자: ${reply.replyer}	(작성일:${reply.createTime})</p>
+					<p>작성자: ${reply.replyer} (작성일:${reply.createTime})</p>
 				</div>
 			</c:forEach>
-			
-			
+
+
 			<!-- 댓글 등록 -->
-			<form action="/reply/insert" method="post" id="replyform">
-				<input type="hidden" name="boardId" value="${board.id}">
-				<p><input type="text" name="replyer" value="${sessionId}" readonly></p>
-				<p>
-					<textarea rows="3" cols="50" name="replyContent" placeholder="댓글을 남겨주세요"></textarea>
-				</p>
-				<input type="submit" value="등록">
-			</form>
+			<c:choose>
+				<c:when test="${!empty sessionId}">
+					<form action="/reply/insert" method="post" id="replyform" name="replyform">
+						<input type="hidden" name="boardId" value="${board.id}">
+						<p>
+							<input type="text" name="replyer" value="${sessionId}" readonly>
+						</p>
+						<p>
+							<textarea rows="3" cols="50" id="replyContent" name="replyContent"
+								placeholder="댓글을 남겨주세요"></textarea>
+						</p>
+						<button type="button" id="replyform_btn" onClick="checkContent()" value="등록">등록</button>
+					</form>
+				</c:when>
+				<c:otherwise>
+					<div class="replylogin">
+						<a href="/user/login"><i class="fa-regular fa-user"></i> 로그인한
+							사용자만 댓글 등록이 가능합니다</a>
+					</div>
+				</c:otherwise>
+			</c:choose>
 			<!-- 댓글 등록 로그인 이동 -->
-			<div class="replylogin">
-				<a href="/user/login">로그인한 사용자만 댓글 등록이 가능합니다</a>
-			</div>
 		</section>
 	</div>
 	<jsp:include page="../layout/footer.jsp" />
+	<script>
+		const checkContent = () => { 
+			let form = document.replyform;
+			let content = document.getElementById("replyContent").value;
+			if(content == "") {
+				alert("댓글을 입력해주세요");
+			}else {
+				form.submit();
+			}
+		}
+	</script>
 </body>
 </html>
