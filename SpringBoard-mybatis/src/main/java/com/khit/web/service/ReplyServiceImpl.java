@@ -1,5 +1,7 @@
 package com.khit.web.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,10 @@ public class ReplyServiceImpl implements ReplyService{
 	@Override
 	public void insert(ReplyDTO replyDTO) {
 		replyMapper.insert(replyDTO);
+	}
+
+	@Override
+	public List<ReplyDTO> getReplyList(Long boardId) {
+		return replyMapper.getReplyList(boardId);
 	}
 }

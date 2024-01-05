@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.khit.web.dto.BoardDTO;
+import com.khit.web.dto.ReplyDTO;
 import com.khit.web.service.BoardService;
+import com.khit.web.service.ReplyService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ public class BoardController {
 
 	private BoardService boardService;
 	
+	private ReplyService replyService;
 	
 	// 글쓰기 페이지
 	@GetMapping("/write")
@@ -57,7 +60,12 @@ public class BoardController {
 		
 		// 글 상세보기
 		BoardDTO boardDTO = boardService.findById(id);
+		
+		// 댓글 목록 보기
+		List<ReplyDTO> replyListDTO = replyService.getReplyList(id);
+		
 	 	model.addAttribute("board", boardDTO);
+	 	model.addAttribute("replyList", replyListDTO);
 		return "/board/detail";
 	}
 	

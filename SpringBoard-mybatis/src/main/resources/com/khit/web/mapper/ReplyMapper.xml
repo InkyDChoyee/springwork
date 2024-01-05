@@ -5,11 +5,10 @@
   
 <mapper namespace="com.khit.web.mapper.ReplyMapper">
 	<insert id="insert">
-		
+		insert into reply(boardid, replyer, replycontent)
+		values(#{boardId}, #{replyer}, #{replyContent})
 	</insert>
-
-
-
-
-
+	<select id="getReplyList" resultType="com.khit.web.dto.ReplyDTO">
+		select * from reply	where boardid = #{boardId}
+	</select>
 </mapper>
