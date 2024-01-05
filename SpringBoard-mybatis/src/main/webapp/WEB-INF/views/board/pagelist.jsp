@@ -48,22 +48,28 @@
 				</tbody>
 			</table>
 			<!-- page 처리 영역 -->
-			<div class="pagination">
+			<div class="pagenation">
 				<!-- 이전 페이지 -->
 				<c:if test="${paging.page > 1}">
-					<a href="/board/paging?page= 1 "><<</a>
-					<a href="/board/paging?page=${paging.page-1}"><</a>
+					<a href="/board/paging?page= 1 "><i class="fa-solid fa-angles-left"></i></a>
+					<a href="/board/paging?page=${paging.page-1}"><i class="fa-solid fa-caret-left"></i></a>
 				</c:if>
 				<!-- 현재 페이지 -->
 				<c:forEach var = "i" begin="${paging.startPage}" end="${paging.endPage}">
-					<a href="/board/paging?page=${i}">${i}</a>
+					<c:choose>
+						<c:when test="${paging.page eq i}">
+							<span class="current_page">${i}</span>
+						</c:when>
+						<c:otherwise>
+							<a href="/board/paging?page=${i}">${i}</a>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 				<!-- 다음 페이지 -->
 				<c:if test="${paging.page < paging.maxPage}">
-					<a href="/board/paging?page=${paging.page+1}">></a>
-					<a href="/board/paging?page=${paging.maxPage}">>></a>
+					<a href="/board/paging?page=${paging.page+1}"><i class="fa-solid fa-caret-right"></i></a>
+					<a href="/board/paging?page=${paging.maxPage}"><i class="fa-solid fa-angles-right"></i></a>
 				</c:if>
-				
 			</div>
 			
 			<!-- 버튼 영역 -->

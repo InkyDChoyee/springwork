@@ -85,12 +85,14 @@ table th, td {padding: 10px;}
 table thead {background: #eee;}
 #boardlist button {padding: 10px;}
 .boardlist_button {display:flex; justify-content: space-between;}
-.pagination {text-align: center;}
+.pagenation {text-align: center;}
 .pagenation a {margin: 5px;}
 #boardlist form {margin: 30px 0;}
 #boardlist form select {padding: 5px 10px;}
 #boardlist form input {width: 535px;}
 #boardlist form button {padding: 3px 10px; width: 100px;}
+.current_page {font-weight: bold; font-size: 1.4rem;}
+
 
 /* 글작성 스타일 */
 #writeform {width: 600px; margin: 20px auto;}
