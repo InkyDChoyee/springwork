@@ -60,6 +60,19 @@
 					</c:choose>
 				</tr>
 			</table>
+			<!-- 댓글 영역 -->
+			<!-- 댓글 목록 -->
+			
+			<!-- 댓글 등록 -->
+			<form action="/reply/insert" method="post" id="replyform">
+				<input type="hidden" name="boardId" value="${board.id}">
+				<p><input type="text" name="replyer" value="${sessionId}" readonly></p>
+				<p>
+					<textarea rows="3" cols="50" name="replyContent" placeholder="댓글을 남겨주세요"></textarea>
+				</p>
+				<input type="submit" value="등록">
+			
+			</form>
 		</section>
 	</div>
 	<jsp:include page="../layout/footer.jsp" />

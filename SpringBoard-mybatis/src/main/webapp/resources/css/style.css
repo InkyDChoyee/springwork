@@ -116,4 +116,11 @@ table thead {background: #eee;}
 #detail textarea{width: 600px; height: 500px; resize: none; overflow-y: scroll auto; padding: 5px;}
 #detail button {padding: 3px 10px; width: 100px;}
 
+/* 댓글 영역 스타일 */
+#replyform input[type="submit"]{width: 60px; height: 40px;}
+#replyform textarea {height: 100px; margin-top:10px;}
+
+
+
+
 
