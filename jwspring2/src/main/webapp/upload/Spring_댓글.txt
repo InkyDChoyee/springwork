@@ -1,0 +1,369 @@
+댓글 쓰기
+ - 댓글 등록 : insert() = void
+=> 1. form방식, 2. ajax방식
+ReplyDTO 필드
+- id(댓글번호)
+- replyer(작성자)
+- replyContent(댓글내용), 
+- boardId(게시글 번호)
+- createTime
+- updateTime
+
+- 댓글 목록
+List<Reply> replyList() = 자료형 필요
+- 글 상세보기에서 출력됨(실행)
+
+* boardController
+public class BoardController {
+
+    private ReplyService replyService;
+
+    @GetMapping
+    public String getBoard(@RequestParam("id") Long id, Model model) {
+	// 댓글 목록 보기
+	List<ReplyDTO> replyListDTO = replyService.getReplyList(id);
+	model.addAttribute("replyList", replyListDTO);
+    }
+
+
+
+* ReplyDTO
+package com.khit.web.dto;
+
+import java.sql.Timestamp;
+
+import lombok.Data;
+
+@Data
+public class ReplyDTO {
+	private Long id;               // 댓글 번호
+	private Long boardId;          // 게시글 번호
+	private String replyer;        // 작성자
+	private String replyContent;   // 댓글 내용
+	private Timestamp createTime;  // 작성일
+	private Timestamp updateTime;  // 수정일
+}
+
+
+
+
+
+
+계층 구조 만들기
+컨트롤러 - 서비스 - 매퍼 구조
+
+* ReplyController
+
+package com.khit.web.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.khit.web.dto.ReplyDTO;
+import com.khit.web.service.ReplyService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequestMapping("/reply")
+@Controller
+public class ReplyController {
+	
+	// 서비스 클래스 주입(생성자, Autowired)
+	@Autowired
+	private ReplyService replyService;
+	
+	@PostMapping("/insert")
+	public String replyInsert(@ModelAttribute ReplyDTO replyDTO) {
+		// 댓글 폼에 입력된 데이터 출력
+		log.info("replyDTO:" + replyDTO);
+		// 댓글 저장 처리
+		replyService.insert(replyDTO);
+		return "redirect:/board?id=" + replyDTO.getBoardId();
+	}
+}
+
+
+
+
+
+
+
+* ReplyService (interface)
+
+package com.khit.web.service;
+
+import com.khit.web.dto.ReplyDTO;
+
+public interface ReplyService {
+
+	void insert(ReplyDTO replyDTO);
+	List<ReplyDTO> getReplyList(Long boardId);
+}
+
+
+
+
+
+
+
+* ReplyServiceImpl (interface 구현)
+
+package com.khit.web.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.khit.web.dto.ReplyDTO;
+import com.khit.web.mapper.ReplyMapper;
+
+@Service  // 서비스를 구현하고 @빈(Bean)을 등록해준다
+public class ReplyServiceImpl implements ReplyService{
+
+	@Autowired
+	private ReplyMapper replyMapper;
+	
+	@Override
+	public void insert(ReplyDTO replyDTO) {
+		replyMapper.insert(replyDTO);
+	}
+
+	@Override
+	public List<ReplyDTO> getReplyList(Long boardId) {
+		return replyMapper.getReplyList(boardId);
+	}
+}
+
+
+
+
+
+
+* ReplyMapper (interface)
+
+package com.khit.web.mapper;
+
+import com.khit.web.dto.ReplyDTO;
+
+public interface ReplyMapper {
+
+	void insert(ReplyDTO replyDTO);
+
+	List<ReplyDTO> getReplyList(Long boardId);
+}
+
+
+
+
+
+
+
+* ReplyMapper (xml파일)
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.khit.web.mapper.ReplyMapper">
+	<insert id="insert">
+		insert into reply(boardid, replyer, replycontent)
+		values(#{boardId), #{replyer}, #{replyContent})
+	</insert>
+</mapper>
+
+
+
+
+
+
+* detail.jsp
+
+<!-- 댓글 목록 -->
+<c:forEach items="${replyList}" var="reply">
+	<div class="reply">
+		<p>${reply.replyContent}</p>
+		<p>작성자: ${reply.replyer}	(작성일:${reply.createTime})</p>
+	</div>
+</c:forEach>
+			
+			
+<!-- 댓글 등록 -->
+<form action="/reply/insert" method="post" id="replyform">
+	<input type="hidden" name="boardId" value="${board.id}">
+	<p><input type="text" name="replyer" value="${sessionId}" readonly></p>
+	<p>
+		<textarea rows="3" cols="50" name="replyContent" placeholder="댓글을 남겨주세요"></textarea>
+	</p>
+	<input type="submit" value="등록">			
+</form>
+<!-- 댓글 등록 로그인 이동 -->
+<div class="replylogin">
+	<a href="/user/login">로그인한 사용자만 댓글 등록이 가능합니다</a>
+</div>
+
+
+
+
+
+
+
+
+
+<<페이지 처리>>
+1. 40~50개
+2. mysql 페이지 처리
+   - limit 명령어
+     => select * from boards order by id desc limit 0, 5;
+3. 페이지별로 게시글 출력 구현 (List, Map 자료구조)
+4. 하단 페이지 번호별 링크 구현 (PageDTO 자료형)
+   - 현재페이지 = page
+   - 최대페이지(총개수에따른) = maxPage
+   - 시작페이지 = startPage
+   - 마지막페이지 = endPage
+
+${paging.page}, ${paging.starPage} ......
+
+
+
+
+* boardController
+
+	// 글 목록 페이지 처리
+	// /board/paging?page=2
+	// @RequestParam(required=true/false) false는 필수가 아니다 라는 의미
+	@GetMapping("/paging")
+	public String getPageList(Model model, 
+			 				// page가 필수가 아니라는 의미
+			@RequestParam(value="page", required=false, defaultValue="1") int page) {
+		log.info("page=", + page);
+		// 페이지와 글 개수를 구현된 목록 보기
+		List<BoardDTO> pagingList = boardService.pagingList(page);
+		model.addAttribute("boardList", pagingList);
+
+		// 화면 하단 구현
+		PageDTO pageDTO = boardService.pagingParam(page);
+		model.addAttribute("paging", pageDTO);
+
+		return "/board/pagelist";                          
+	}
+
+
+
+* BoardService
+public interface BoardService {
+	List<BoardDTO> pagingList(int page);
+	PageDTO pagingParam(int page);
+}
+
+
+
+* BoardServiceImpl
+	// class변수로 선언
+	int pageLimit = 5;  // 페이지에 표시할 게시글 수
+	int blockLimit = 5;  // 하단에 표시할 페이지 수
+
+	@Override
+	public List<BoardDTO> pagingList(int page) {
+		/*
+		   1page (0, 5), 2page(5,5), 3page(10,5), 4page(15,5)
+		   select * from boards order by id desc limit 0, 5;
+		 	
+		 */
+
+		int pageStart = (page - 1) * pageLimit; // 페이지 시작 인덱스 번호
+		Map<String, Integer> pagingParam = new HashMap<>();
+		pagingParam.put("start", pageStart);  // 페이지 시작 번호
+		pagingParam.put("limit", pageLimit);  // 페이지 게시글 수
+		
+		List<BoardDTO> pagingList = boardMapper.pagingList(pagingParam);
+		return pagingList;
+	}
+
+	@Override
+	public PageDTO pagingParam(int page) {
+		// 하단에 보여줄 페이지 블럭 계산
+		int totalRow = boardMapper.boardCount(); // 전체 게시글 수
+		// 전체 페이지 개수 - 올림(Math.ceil) 52/10 = 5.2 -> 6.2 => (int)6
+		int maxPage = (int)(Math.ceil((double)totalRow/pageLimit));
+		// 하단에 보여줄 시작 페이지값 계산(1~5, 6~10 = 1, 6, 11, 16)
+		int startPage = (((int)(Math.ceil((double)page/blockLimit))-1) * blockLimit) + 1; ;
+		// 하단에 보여줄 마지막 페이지값 계산(5, 10, 15)
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		PageDTO pageDTO = new PageDTO();
+		pageDTO.setPage(page);
+		pageDTO.setMaxPage(maxPage);
+		pageDTO.setStartPage(startPage);
+		pageDTO.setEndPage(endPage);
+		return pageDTO;
+	}
+
+
+
+
+
+* BoardMapper
+
+public interface BoardMapper {
+	List<BoardDTO> pagingList(Map<String, Integer> pagingParam);
+
+}
+
+
+
+
+* BoardMapper.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper>
+	<select id="pagingList" resultType="com.khit.web.dto.BoardDTO">
+		select * from boards order by id desc limit #{start}, #{limit};
+	</select>
+
+	<select id="boardCount" resultType="Integer">
+		select count(id) from boards
+	</select>
+</mapper>
+
+
+
+* pagelist.jsp
+	<!-- page 처리 영역 -->
+	<div class="pagenation">
+		<!-- 이전 페이지 -->
+		<c:if test="${paging.page > 1}">
+			<a href="/board/paging?page= 1 "><i class="fa-solid fa-angles-left"></i></a>
+			<a href="/board/paging?page=${paging.page-1}"><i class="fa-solid fa-caret-left"></i></a>
+		</c:if>
+		<!-- 현재 페이지 -->
+		<c:forEach var = "i" begin="${paging.startPage}" end="${paging.endPage}">
+			<c:choose>
+				<c:when test="${paging.page eq i}">
+					<span class="current_page">${i}</span>
+				</c:when>
+				<c:otherwise>
+					<a href="/board/paging?page=${i}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<!-- 다음 페이지 -->
+		<c:if test="${paging.page < paging.maxPage}">
+			<a href="/board/paging?page=${paging.page+1}"><i class="fa-solid fa-caret-right"></i></a>
+			<a href="/board/paging?page=${paging.maxPage}"><i class="fa-solid fa-angles-right"></i></a>
+		</c:if>
+	</div>
+
+
+
+

@@ -1,8 +1,43 @@
+
+<íŒŒì¼ ì—…ë¡œë“œ>
+* pom.xml -> cos, commons-fileupload
+* web.xml -> CommonsMultipartResolver
+
+1. ì„œë²„ì— ì €ì¥
+MultipartFile-ì €ì¥ ë©”ì„œë“œ(transferTo(file)))
+1ê°œ - 
+ì—¬ëŸ¬ê°œ
+
+
+
+
+* pom.xml
+
+<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+<dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.4</version>
+</dependency>
+
+
+
+* root-context.xml
+
+	<!-- íŒŒì¼ ì—…ë¡œë“œ ì„¤ì •, ìµœëŒ€ì‚¬ì´ì¦ˆ = 10MB -->
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000" />	
+	</bean>
+
+
+
+
+* FileController
 package org.khit.myapp.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +56,7 @@ public class FileController {
 	}
 	
 	@PostMapping("/file/upload")
-	// MultipartFile class import => ¿©·¯ ÇÔ¼ö »ç¿ë °¡´É
+	// MultipartFile class import => ì—¬ëŸ¬ í•¨ìˆ˜ ì‚¬ìš© ê°€ëŠ¥
 	public String upload(MultipartFile filename) throws IllegalStateException, IOException {
 		long fileSize = filename.getSize();
 		String fileType = filename.getContentType();
@@ -29,17 +64,37 @@ public class FileController {
 		log.info(fileSize + "B");
 		log.info(fileType);
 		
-		// ¼­¹ö¿¡ ÀúÀå
+		// ì„œë²„ì— ì €ì¥
 		String filepath = "C:\\springwork\\jwspring2\\src\\main\\webapp\\upload";
 		String savedFilename = filename.getOriginalFilename();
 		
-		// ÆÄÀÏ ÀÌ¸§ÀÌ Áßº¹µÇÁö ¾Ê´Â °íÀ¯ ID °´Ã¼ »ı¼º => UUID class import
-		UUID uuid = UUID.randomUUID();
-		savedFilename = uuid.toString() + "_" + savedFilename;
-		
 		File file = new File(filepath + "\\" + savedFilename);
-		filename.transferTo(file);  // ¼­¹öÆú´õ¿¡ ÀúÀå
+		filename.transferTo(file);  // ì„œë²„í´ë”ì— ì €ì¥
 		
 		return "/file/uploadform";
 	}
 }
+
+
+
+
+
+
+
+2. DBì—°ë™
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
