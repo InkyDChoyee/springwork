@@ -52,10 +52,10 @@
 							<td><a href="/board/update?id=${board.id}"><button>수정</button></a>
 								<a href="/board/delete?id=${board.id}"
 								onclick="return confirm('정말로 삭제하시겠습니까?')"><button>삭제</button></a>
-								<a href="/board/"><button>목록</button></a></td>
+								<a href="/board/paging?page=${page}"><button>목록</button></a></td>
 						</c:when>
 						<c:otherwise>
-							<td><a href="/board/"><button>목록</button></a></td>
+							<td><a href="/board/paging?page=${page}"><button>목록</button></a></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>

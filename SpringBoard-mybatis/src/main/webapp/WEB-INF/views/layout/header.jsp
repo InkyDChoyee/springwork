@@ -19,7 +19,7 @@
 					<li><a href="/user/join">회원가입</a></li>
 					<li><a href="/user/">회원목록</a></li>
 					<!-- <li><a href="/board/write">글쓰기</a></li> -->
-					<li><a href="/board/">게시판</a></li>
+					<li><a href="/board/paging">게시판</a></li>
 				</ul>
 			</c:when>
 			<c:otherwise>

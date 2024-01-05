@@ -28,7 +28,7 @@
 					<c:forEach items="${boardList}" var="board">
 						<tr>
 							<td>${board.id}</td>
-							<td><a href="/board?id=${board.id}">${board.boardTitle}</a></td>
+							<td><a href="/board?id=${board.id}&page=${paging.page}">${board.boardTitle}</a></td>
 							<td>${board.userId}</td>
 							<td>${board.hit}</td>
 							<td>
@@ -51,6 +51,7 @@
 			<div class="pagination">
 				<!-- 이전 페이지 -->
 				<c:if test="${paging.page > 1}">
+					<a href="/board/paging?page= 1 "><<</a>
 					<a href="/board/paging?page=${paging.page-1}"><</a>
 				</c:if>
 				<!-- 현재 페이지 -->
@@ -60,7 +61,9 @@
 				<!-- 다음 페이지 -->
 				<c:if test="${paging.page < paging.maxPage}">
 					<a href="/board/paging?page=${paging.page+1}">></a>
+					<a href="/board/paging?page=${paging.maxPage}">>></a>
 				</c:if>
+				
 			</div>
 			
 			<!-- 버튼 영역 -->

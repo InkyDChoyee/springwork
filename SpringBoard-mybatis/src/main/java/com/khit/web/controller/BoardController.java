@@ -42,7 +42,7 @@ public class BoardController {
 	public String write(BoardDTO boardDTO) {
 //		log.info("boardDTO=" + boardDTO);
 		boardService.insert(boardDTO);
-		return "redirect:/board/";  // boardlist.jsp로 이동
+		return "redirect:/board/paging";  // pagelist.jsp로 이동
 	}
 	
 	// 글목록
@@ -77,7 +77,8 @@ public class BoardController {
 	// 글 상세보기
 	// /board?id=
 	@GetMapping
-	public String getBoard(@RequestParam("id") Long id, Model model) {
+	public String getBoard(@RequestParam("id") Long id, Model model,
+			@RequestParam(value="page", required=false, defaultValue="1") int page) {
 	 	// 조회수 증가
 		boardService.updateHit(id);
 		
@@ -89,6 +90,7 @@ public class BoardController {
 		
 	 	model.addAttribute("board", boardDTO);
 	 	model.addAttribute("replyList", replyListDTO);
+	 	model.addAttribute("page", page);
 		return "/board/detail";
 	}
 	
@@ -96,7 +98,7 @@ public class BoardController {
 	@GetMapping("/delete")
 	public String delete(@RequestParam("id") Long id) {
 		boardService.delete(id);
-		return "redirect:/board/";
+		return "redirect:/board/paging";
 	}
 	
 	// 게시글 수정
