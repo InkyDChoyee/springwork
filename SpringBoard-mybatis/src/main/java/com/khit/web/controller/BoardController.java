@@ -2,6 +2,7 @@ package com.khit.web.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.khit.web.dto.BoardDTO;
+import com.khit.web.dto.PageDTO;
 import com.khit.web.dto.ReplyDTO;
 import com.khit.web.service.BoardService;
 import com.khit.web.service.ReplyService;
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class BoardController {
 
+	@Autowired
 	private BoardService boardService;
 	
 	private ReplyService replyService;
@@ -37,7 +40,7 @@ public class BoardController {
 	// 글쓰기
 	@PostMapping("/write")
 	public String write(BoardDTO boardDTO) {
-		log.info("boardDTO=" + boardDTO);
+//		log.info("boardDTO=" + boardDTO);
 		boardService.insert(boardDTO);
 		return "redirect:/board/";  // boardlist.jsp로 이동
 	}
@@ -49,6 +52,26 @@ public class BoardController {
 		List<BoardDTO> boardDTOList = boardService.findAll();
 		model.addAttribute("boardList",boardDTOList);
 		return "/board/boardlist";
+	}
+	
+	// 글 목록 페이지 처리
+	// /board/paging?page=2
+	// @RequestParam(required=true/false) false는 필수가 아니다 라는 의미
+	@GetMapping("/paging")
+	public String getPageList(Model model, 
+			 				// page가 필수가 아니라는 의미
+			@RequestParam(value="page", required=false, defaultValue="1") int page) {
+//		log.info("page=", + page);
+		// 페이지와 글 개수를 구현된 목록 보기
+		List<BoardDTO> pagingList = boardService.pagingList(page);
+//		log.info("pagingList=", pagingList);
+		model.addAttribute("boardList", pagingList);
+		
+		// 화면 하단 구현
+		PageDTO pageDTO = boardService.pagingParam(page);
+		model.addAttribute("paging", pageDTO);
+		
+		return "/board/pagelist";                          
 	}
 	
 	// 글 상세보기

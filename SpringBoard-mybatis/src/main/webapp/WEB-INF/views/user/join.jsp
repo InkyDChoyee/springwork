@@ -45,6 +45,5 @@
 	</div>
 	<jsp:include page="../layout/footer.jsp" />
 	<script src="../resources/js/validation.js" ></script>
-
 </body>
 </html>
