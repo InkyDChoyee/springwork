@@ -13,5 +13,6 @@
 		</p>
 		<p><input type="submit" value="전송"></p>
 	</form>
+	<p>저장된 파일: ${filename}</p>
 </body>
 </html>

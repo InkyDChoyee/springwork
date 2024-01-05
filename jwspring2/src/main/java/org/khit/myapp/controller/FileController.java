@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public class FileController {
 	
 	@PostMapping("/file/upload")
 	// MultipartFile class import => 여러 함수 사용 가능
-	public String upload(MultipartFile filename) throws IllegalStateException, IOException {
+	public String upload(MultipartFile filename, Model model) throws IllegalStateException, IOException {
 		long fileSize = filename.getSize();
 		String fileType = filename.getContentType();
 //		log.info(originFilename);
@@ -39,6 +40,8 @@ public class FileController {
 		
 		File file = new File(filepath + "\\" + savedFilename);
 		filename.transferTo(file);  // 서버폴더에 저장
+		
+		model.addAttribute("filename", savedFilename);
 		
 		return "/file/uploadform";
 	}
