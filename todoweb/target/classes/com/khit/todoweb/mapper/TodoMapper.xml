@@ -13,4 +13,8 @@
 		insert into tbl_todo(title, writer)
 		values(#{title}, #{writer})
 	</insert>
+	
+	<select id="findAll" resultType="com.khit.todoweb.vo.TodoVO">
+		select * from tbl_todo order by tno desc
+	</select>
 </mapper>

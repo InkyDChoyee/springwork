@@ -1,5 +1,7 @@
 package com.khit.todoweb.mapper;
 
+import java.util.List;
+
 //import java.sql.Timestamp;
 
 import org.junit.Test;
@@ -26,21 +28,31 @@ public class TodoMapperTest {
 		log.info(todoMapper.getTime());
 	}
 	
+//	@Test
+//	public void testInsert() {
+//		//데이터 1개 생성 - setter -> builer()
+//		
+//		/*TodoVO todoVO = new TodoVO();
+//		//todoVO.setTno(1L);
+//		todoVO.setTitle("12시 전에 취침 실패");
+//		todoVO.setWriter("대상현");
+//		//todoVO.setCreatedDate(new Timestamp(System.currentTimeMillis()));*/
+//		
+//		TodoVO todoVO = TodoVO.builder()
+//				.title("20분 운동하기")
+//				.writer("user01")
+//				.build();
+//		
+//		todoMapper.insert(todoVO);
+//	}
+	
 	@Test
-	public void testInsert() {
-		//데이터 1개 생성 - setter -> builer()
+	public void testFindAll() {
+		// db에 있는 데이터 추출하기
+		List<TodoVO> todoList = todoMapper.findAll();
 		
-		/*TodoVO todoVO = new TodoVO();
-		//todoVO.setTno(1L);
-		todoVO.setTitle("12시 전에 취침 실패");
-		todoVO.setWriter("대상현");
-		//todoVO.setCreatedDate(new Timestamp(System.currentTimeMillis()));*/
-		
-		TodoVO todoVO = TodoVO.builder()
-				.title("20분 운동하기")
-				.writer("user01")
-				.build();
-		
-		todoMapper.insert(todoVO);
+		for(TodoVO todo : todoList) {
+			log.info(todo);
+		}
 	}
 }
