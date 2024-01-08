@@ -28,7 +28,7 @@
 					<li><a href="/user/update">나의정보</a></li>
 					<li><a href="/user/">회원목록</a></li>
 					<!-- <li><a href="/board/write">글쓰기</a></li> -->
-					<li><a href="/board/">게시판</a></li>
+					<li><a href="/board/paging">게시판</a></li>
 				</ul>
 			</c:otherwise>
 		</c:choose>

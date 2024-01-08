@@ -8,7 +8,22 @@
 		insert into reply(boardid, replyer, replycontent)
 		values(#{boardId}, #{replyer}, #{replyContent})
 	</insert>
+	
 	<select id="getReplyList" resultType="com.khit.web.dto.ReplyDTO">
 		select * from reply	where boardid = #{boardId}
 	</select>
+	
+	<delete id="delete">
+		delete from reply where id = #{id}
+	</delete>
+	
+	<select id="findById" resultType="com.khit.web.dto.ReplyDTO">
+		select * from reply where id = #{id};
+	</select>
+	
+	<update id="update">
+		update reply
+		set replycontent = #{replyContent}, updatetime = now()
+		where id = #{id};
+	</update>
 </mapper>
