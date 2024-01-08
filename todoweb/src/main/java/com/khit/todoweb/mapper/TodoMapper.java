@@ -4,5 +4,7 @@ import com.khit.todoweb.vo.TodoVO;
 
 public interface TodoMapper {
 	
-	public void insert(TodoVO todoVO);
+	public String getTime();
+	
+	public void insert(TodoVO todoVO); //등록하기
 }

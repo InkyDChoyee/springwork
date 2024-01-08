@@ -21,8 +21,8 @@ public class TodoController {
 	}
 	
 	@PostMapping("/register")
-	public String register(@ModelAttribute TodoDTO todoDTO) {
-		log.info("todoDTO : " + todoDTO);
+	public String register(@ModelAttribute TodoDTO todoDTO ) {
+		log.info("todoDTO:" + todoDTO);
 		return "index";
 	}
 }
