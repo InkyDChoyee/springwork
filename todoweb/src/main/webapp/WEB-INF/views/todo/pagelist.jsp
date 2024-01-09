@@ -11,7 +11,30 @@
 <body>
 	<div class="container-fluid">
 		<jsp:include page="../layout/header.jsp" />
-
+		<!-- 검색 영역 -->
+		<div class="row content">
+			<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Search</h5>
+						<form action="/todo/paging" method="get">
+							<div class="mb-3">
+								<input type="checkbox" name="types" value="t">제목
+								<input type="checkbox" name="types" value="w">작성자
+								<input type="text" name="keyword" class="form-control">
+							</div>
+							<div class="mb-3">
+								<div class="float-end">
+									<button type="submit" class="btn btn-primary">Search</button>
+									<button type="reset" class="btn btn-info">Clear</button>
+								</div>
+							</div>
+						</form>								
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<!-- 본문 영역 -->
 		<div class="row content">
 			<div class="col">
