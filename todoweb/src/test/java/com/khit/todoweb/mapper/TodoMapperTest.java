@@ -47,25 +47,25 @@ public class TodoMapperTest {
 //		todoMapper.insert(todoVO);
 //	}
 	
-	@Test
-	public void testFindAll() {
-		// db에 있는 데이터 추출하기
-		List<TodoVO> todoList = todoMapper.findAll();
-		
-//		for(TodoVO todo : todoList) {
-//			log.info(todo);
-//		}
-		// 람다식으로 출력
-		todoList.forEach(todo -> log.info(todo));
-	}
+//	@Test
+//	public void testFindAll() {
+//		// db에 있는 데이터 추출하기
+//		List<TodoVO> todoList = todoMapper.findAll();
+//		
+////		for(TodoVO todo : todoList) {
+////			log.info(todo);
+////		}
+//		// 람다식으로 출력
+//		todoList.forEach(todo -> log.info(todo));
+//	}
 	
-	@Test
-	public void testFindById() {
-		// 데이터 1개 가져오기
-		// db에서 1번 데이터 검색(1L)
-		TodoVO todoVO = todoMapper.findById(1L);
-		log.info(todoVO);
-	}
+//	@Test
+//	public void testFindById() {
+//		// 데이터 1개 가져오기
+//		// db에서 1번 데이터 검색(1L)
+//		TodoVO todoVO = todoMapper.findById(1L);
+//		log.info(todoVO);
+//	}
 //	
 //	@Test
 //	public void testDelete() {
@@ -83,15 +83,29 @@ public class TodoMapperTest {
 //		todoMapper.update(todoVO);
 //	}
 	
+//	@Test
+//	public void testPagingList() {
+//		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+//				.page(1)
+//				.size(10)
+//				.build();
+//		List<TodoVO> todoList = todoMapper.pagingList(pageRequestDTO);
+//		for(TodoVO todo : todoList) {
+//			log.info(todo);
+//		}
+//	}
+	
 	@Test
-	public void testPagingList() {
+	public void testSearch() {
 		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
-				.page(1)
-				.size(10)
-				.build();
-		List<TodoVO> todoList = todoMapper.pagingList(pageRequestDTO);
-		for(TodoVO todo : todoList) {
-			log.info(todo);
+													.page(1)
+													.size(10)
+													.types(new String[] {"t", "w"})
+													.keyword("거북")
+													.build();
+		List<TodoVO> voList = todoMapper.pagingList(pageRequestDTO);
+		for(TodoVO todoVO : voList) {
+			log.info(todoVO);
 		}
 	}
 }
