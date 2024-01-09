@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Todo 등록</title>
+<title>Todo 목록</title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -28,10 +28,10 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${todoList}" var="todo">
+								<c:forEach items="${responseDTO.dtoList}" var="todo">
 									<tr>
 										<td>${todo.tno}</td>
-										<td><a href="/todo?tno=${todo.tno}">${todo.title}</a></td>
+										<td><a href="/todo?tno=${todo.tno}&page=${responseDTO.page}">${todo.title}</a></td>
 										<td>${todo.writer}</td>
 										<td><fmt:formatDate value="${todo.createDate}"
 											pattern="yyy-MM-dd" /></td>
@@ -39,6 +39,31 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						
+						<!-- 페이지 처리 -->
+						<div class="d-flex justify-content-center">
+							<ul class="pagination flex-wrap">
+								<!-- 이전 페이지 -->
+								<c:if test="${responseDTO.prev}">
+									<li class="page-item">
+										<a class="page-link" href="/todo/paging?page=${responseDTO.startPage - 1}">Previous</a>
+									</li>
+								</c:if>
+								<!-- 페이지 번호 -->
+								<c:forEach var="num" begin="${responseDTO.startPage}" end="${responseDTO.endPage}">
+									<li class="page-item ${responseDTO.page eq num ? 'active' : ''}">
+										<a class="page-link" href="/todo/paging?page=${num}">${num}</a>
+									</li>
+								</c:forEach>
+									<!-- 이전 페이지 -->
+								<c:if test="${responseDTO.next}">
+									<li class="page-item">
+										<a class="page-link" href="/todo/paging?page=${responseDTO.endPage + 1}">Next</a>
+									</li>
+								</c:if>
+							</ul>
+						</div>
+						
 					</div>
 				</div>
 			</div>

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.khit.todoweb.dto.PageRequestDTO;
+import com.khit.todoweb.dto.PageResponseDTO;
 import com.khit.todoweb.dto.TodoDTO;
 import com.khit.todoweb.unittest.TodoMapperTest;
 
@@ -19,15 +21,29 @@ public class TodoServiceTest {
 	@Autowired
 	private TodoService todoService;
 	
-	@Test
-	public void testInsert() {
-		// 폼에 입력된 자료로 간주해서 db에 저장
-		TodoDTO todoDTO = TodoDTO.builder()
-						.title("입사지원서쓰기")
-						.writer("interviwee")
-						.build();
-		
-		todoService.insert(todoDTO);
-	}
+//	@Test
+//	public void testInsert() {
+//		// 폼에 입력된 자료로 간주해서 db에 저장
+//		TodoDTO todoDTO = TodoDTO.builder()
+//						.title("입사지원서쓰기")
+//						.writer("interviwee")
+//						.build();
+//		
+//		todoService.insert(todoDTO);
+//	}
 	
+	@Test
+	public void testPaging() {
+		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+													.page(1)
+													.size(10)
+													.build();
+		PageResponseDTO<TodoDTO> responseDTO = todoService.pagingList(pageRequestDTO);
+		log.info(responseDTO);
+		
+		// todo목록 데이터 출력
+		responseDTO.getDtoList()
+		           .stream()
+		           .forEach(todo -> log.info(todo));
+	}
 }

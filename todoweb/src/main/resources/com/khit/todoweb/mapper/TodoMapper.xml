@@ -17,4 +17,27 @@
 	<select id="findAll" resultType="com.khit.todoweb.vo.TodoVO">
 		select * from tbl_todo order by tno desc
 	</select>
+	
+	<select id="findById" resultType="com.khit.todoweb.vo.TodoVO">
+		select * from tbl_todo where tno = #{tno}
+	</select>
+	
+	<update id="update">
+		update tbl_todo
+		set title = #{title}, writer = #{writer}
+		where tno = #{tno}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_todo where tno = #{tno}
+	</delete>
+	
+	<select id="pagingList" resultType="com.khit.todoweb.vo.TodoVO">
+		select * from tbl_todo order by tno desc limit #{skip}, #{size}
+	</select>
+	
+	<select id="todoCount" resultType="Integer">
+		select count(tno) from tbl_todo
+	</select>
+	
 </mapper>
