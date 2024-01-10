@@ -12,7 +12,7 @@
 <body>
 	<div class="content">
 		<h2>Login</h2>
-		<form action="/member/Login" method="post">
+		<form action="/member/login" method="post">
 			<p><input type="text" name="email" placeholder="Email"></p>
 			<p><input type="password" name="password" placeholder="Password"></p>
 			<p>
