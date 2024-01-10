@@ -1,5 +1,7 @@
 package com.khit.members.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,7 +36,19 @@ public class MemberController {
 	
 	@GetMapping("/login")
 	public String loginForm() {
-		return "member/login";
+		return "/member/login";
+	}
+
+	@GetMapping("/login")
+	public String login(@ModelAttribute MemberDTO memberDTO,
+						HttpSession session) {
+		MemberDTO loginMember = memberService.login(memberDTO);
+		if(loginMember != null) {
+			session.setAttribute("sessionEmail", memberDTO.getEmail());
+			return "main";
+		} else {
+			return "/member/login";
+		}
 	}
 	
 	
