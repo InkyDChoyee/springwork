@@ -62,45 +62,48 @@
 			</table>
 			<!-- 댓글 영역 -->
 			<!-- 댓글 목록 -->
-			<c:forEach items="${replyList}" var="reply">
-				<div class="reply">
-					<p>${reply.replyContent}</p>
-					<p>작성자: ${reply.replyer} 
-					<c:choose>
-						<c:when test="${empty reply.updateTime}">
-								(작성일 : <fmt:formatDate value="${reply.createTime}"
-										pattern="yyy-MM-dd HH:mm:ss" />)
-						</c:when>
-						<c:otherwise>
-								(수정일 : <fmt:formatDate value="${reply.updateTime}"
-										pattern="yyy-MM-dd HH:mm:ss" />)
-						</c:otherwise>
-					</c:choose>
-					</p>
-					
-					<P>
-						<a href="/reply/update?boardId=${board.id}&id=${reply.id}">수정</a> | 
-						<a href="/reply/delete?boardId=${board.id}&id=${reply.id}"
-						onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
-					</P>
-				</div>
-			</c:forEach>
+			<div id="reply-list">
+			
+				<c:forEach items="${replyList}" var="reply">
+					<div class="reply">
+						<p>${reply.replyContent}</p>
+						<p>작성자: ${reply.replyer} 
+						<c:choose>
+							<c:when test="${empty reply.updateTime}">
+									(작성일 : <fmt:formatDate value="${reply.createTime}"
+											pattern="yyy-MM-dd HH:mm:ss" />)
+							</c:when>
+							<c:otherwise>
+									(수정일 : <fmt:formatDate value="${reply.updateTime}"
+											pattern="yyy-MM-dd HH:mm:ss" />)
+							</c:otherwise>
+						</c:choose>
+						</p>
+						
+						<P>
+							<a href="/reply/update?boardId=${board.id}&id=${reply.id}">수정</a> | 
+							<a href="/reply/delete?boardId=${board.id}&id=${reply.id}"
+							onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+						</P>
+					</div>
+				</c:forEach>
+							
+			</div>
+			
 
 
 			<!-- 댓글 등록 -->
 			<c:choose>
 				<c:when test="${!empty sessionId}">
-					<form action="/reply/insert" method="post" id="replyform" name="replyform">
-						<input type="hidden" name="boardId" value="${board.id}">
-						<p>
-							<input type="text" name="replyer" value="${sessionId}" readonly>
-						</p>
-						<p>
-							<textarea rows="3" cols="50" id="replyContent" name="replyContent"
-								placeholder="댓글을 남겨주세요"></textarea>
-						</p>
-						<button type="button" id="replyform_btn" onClick="checkContent()" value="등록">등록</button>
-					</form>
+					<input id="boardId" type="hidden" name="boardId" value="${board.id}">
+					<p>
+						<input id="replyer" type="text" name="replyer" value="${sessionId}" readonly>
+					</p>
+					<p>
+						<textarea rows="3" cols="50" id="replyContent" name="replyContent"
+							placeholder="댓글을 남겨주세요"></textarea>
+					</p>
+					<button type="button" id="replyform_btn" onClick="reply()" value="등록">등록</button>
 				</c:when>
 				<c:otherwise>
 					<div class="replylogin">
@@ -114,14 +117,46 @@
 	</div>
 	<jsp:include page="../layout/footer.jsp" />
 	<script>
-		const checkContent = () => { 
-			let form = document.replyform;
+		const reply = function() { 
 			let content = document.getElementById("replyContent").value;
+			let replyer = document.getElementById("replyer").value;
+			let boardId = document.getElementById("boardId").value;
+
 			if(content == "") {
 				alert("댓글을 입력해주세요");
-			}else {
-				form.submit();
+				document.getElementById("replyContent").focus();
+				return false;
 			}
+			//ajax 구현
+			$.ajax({
+				// 요청 방식: POST, 요청주소: /reply/insert
+				type: "POST",
+				url: "/reply/insert",
+				data: {					
+					boardId: boardId,
+					replyer: replyer,
+					replyContent: content
+				},
+				success: function(replyList){
+					console.log("댓글 등록 성공");
+					console.log(replyList);
+					// 댓글 목록
+					let output = "";
+					for(let i in replyList) {
+						output += "<div class='reply'>";
+						output += "<p>" + replyList[i].replyContent + "</p>";
+						output += "<p>작성자 : " + replyList[i].replyer + ""; 
+						output += "(작성일 : " + replyList[i].createTime + ")</p>"; 
+						output += "</div>";
+					}
+					document.getElementById("reply-list").innerHTML = output;
+					// 댓글창 초기화
+					document.getElementById("replyContent").value = "";
+				},
+				error: function(){
+					console.log("댓글 등록 실패");
+				}
+			});
 		}
 	</script>
 </body>
