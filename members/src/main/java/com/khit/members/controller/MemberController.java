@@ -39,17 +39,22 @@ public class MemberController {
 		return "/member/login";
 	}
 
-	@GetMapping("/login")
+	@PostMapping("login")
 	public String login(@ModelAttribute MemberDTO memberDTO,
-						HttpSession session) {
+			HttpSession session) {
 		MemberDTO loginMember = memberService.login(memberDTO);
-		if(loginMember != null) {
+		if(loginMember !=null) {
 			session.setAttribute("sessionEmail", memberDTO.getEmail());
 			return "main";
-		} else {
-			return "/member/login";
+		}else {
+			return "member/login";
 		}
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();   // 葛电 技记 昏力
+		return "redirect:/";   // 碍力 捞悼 = redirect
+	}
 	
 }

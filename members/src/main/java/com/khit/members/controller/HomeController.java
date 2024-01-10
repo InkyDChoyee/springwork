@@ -12,6 +12,12 @@ public class HomeController {
 		return "index";
 	}
 	
+	@GetMapping("main")
+	// 로그인 됐을 때 main페이지가 열림
+	public String main() {
+		return "main";
+	}
+	
 	// "/"경로에서 404 에러 발생
 	@GetMapping("favicon.ico")
 	@ResponseBody // - json 문자 데이터
