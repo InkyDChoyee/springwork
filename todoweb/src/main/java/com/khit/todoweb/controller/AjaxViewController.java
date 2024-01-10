@@ -25,4 +25,9 @@ public class AjaxViewController {  // 페이지 컨트롤러
 	public String ex03() {
 		return "/ajax-ex/ex03";
 	}
+	
+	@GetMapping("/ajax/ex04")
+	public String ex04() {
+		return "/ajax-ex/ex04";
+	}
 }
