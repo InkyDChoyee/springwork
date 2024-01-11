@@ -48,9 +48,11 @@
 	const detail = function(mid){
 		location.href= "/member?id=" + mid;
 	}
-	const del = function(mid){
+	const del = function(id){
 		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href= "/member/delete?id=" + mid;
+			//location.href= "/member/delete?id=" + id;
+			location.href= "/member/delete?id=" + id;
+			console.log(id);
 		}
 	}
 </script>

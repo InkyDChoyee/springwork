@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.khit.members.controller.MemberController;
 import com.khit.members.dto.MemberDTO;
 import com.khit.members.repository.MemberRepository;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @AllArgsConstructor
 @Service
 public class MemberService {
@@ -41,10 +44,20 @@ public class MemberService {
 
 	public void delete(Long id) {
 		memberRepository.delete(id);
+		log.info(""+id);
 	}
 
 	public void update(MemberDTO memberDTO) {
 		memberRepository.update(memberDTO);
+	}
+
+	public String checkEmail(String email) {
+		MemberDTO memberDTO = memberRepository.findByEmail(email);
+		if(memberDTO == null) {   // 찾는 객체가 없으면 입력받은 email 사용 가능
+			return "OK";
+		}else {
+			return "NO";
+		}
 	}
 	
 }

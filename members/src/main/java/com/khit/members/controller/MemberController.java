@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.khit.members.dto.MemberDTO;
 import com.khit.members.service.MemberService;
@@ -81,7 +82,8 @@ public class MemberController {
 	@GetMapping("/delete")
 	public String delete(@RequestParam("id") Long id) {
 		memberService.delete(id);
-		return "redirect:/member";
+		
+		return "redirect:/member/";
 	}
 
 	// 회원 수정
@@ -99,6 +101,13 @@ public class MemberController {
 	public String update(@ModelAttribute MemberDTO memberDTO){
 		memberService.update(memberDTO);
 		return "redirect:/member?id=" + memberDTO.getId();
+	}
+	
+	// 이메일 중복 검사
+	@PostMapping("/checkemail")
+	public @ResponseBody String checkEmail(@RequestParam("email") String email) {
+		String resultText = memberService.checkEmail(email);
+		return resultText;  // "OK" 또는 "NO"
 	}
 	
 }

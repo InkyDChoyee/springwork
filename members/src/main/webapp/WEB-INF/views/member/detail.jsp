@@ -40,7 +40,8 @@
 			<p>
 				<button type="button" onclick="list()">List</button>
 				<button type="button" onclick="updateFn()">Update</button>
-				<button type="button" onclick="del('${member.id}')">Delete</button>
+				<button type="button" onclick="del(${member.id})">Delete</button>
+				<%-- <button><a href="/member/delete?id= + ${member.id}">Delete</a></button> --%>
 			</p>
 	</div>
 <script>
