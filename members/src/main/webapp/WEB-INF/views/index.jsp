@@ -14,6 +14,7 @@
 		<h2>Members Project...</h2>
 		<h4><a href="/member/join">Join</a></h4>
 		<h4><a href="/member/login">Login</a></h4>
+		<h4><a href="/member/">MemberList</a></h4>
 	</div>
 </body>
 </html>

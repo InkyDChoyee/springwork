@@ -1,5 +1,7 @@
 package com.khit.members.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.khit.members.dto.MemberDTO;
@@ -20,6 +22,29 @@ public class MemberService {
 	public MemberDTO login(MemberDTO memberDTO) {
 		return memberRepository.login(memberDTO);
 		
+	}
+
+	public List<MemberDTO> findAll() {
+		return memberRepository.findAll();
+	}
+
+	public MemberDTO findById(Long id) {
+		return memberRepository.findById(id);
+	}
+
+	
+	
+	
+	public MemberDTO findByEmail(String email) {
+		return memberRepository.findByEmail(email);
+	}
+
+	public void delete(Long id) {
+		memberRepository.delete(id);
+	}
+
+	public void update(MemberDTO memberDTO) {
+		memberRepository.update(memberDTO);
 	}
 	
 }
